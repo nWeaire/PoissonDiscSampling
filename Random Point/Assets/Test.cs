@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +7,12 @@ public class Test : MonoBehaviour
 {
 
     public float radius = 1;
-    public Vector2 regionSize = Vector2.one;
+    public Vector3 regionSize = Vector3.one;
     public int rejectionSamples = 30;
     public float displayRadius = 1;
 
-    List<Vector2> points;
+    [HideInInspector]
+    public List<Vector3> points;
 
     void OnValidate()
     {
@@ -19,12 +21,12 @@ public class Test : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(regionSize / 2, regionSize);
+        Gizmos.DrawWireCube((regionSize / 2) + transform.position, regionSize);
         if (points != null)
         {
-            foreach (Vector2 point in points)
+            foreach (Vector3 point in points)
             {
-                Gizmos.DrawSphere(point, displayRadius);
+                Gizmos.DrawSphere(point + transform.position, displayRadius);
             }
         }
     }
